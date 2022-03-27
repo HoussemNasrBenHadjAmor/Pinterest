@@ -18,7 +18,7 @@ const Search = ({ searchTerm, clicked }) => {
     if (searchTerm !== "") {
       if (clicked) {
         setLoading(true);
-        const query = searchQuery();
+        const query = searchQuery(searchTerm.toLowerCase());
         client
           .fetch(query)
           .then((res) => {
