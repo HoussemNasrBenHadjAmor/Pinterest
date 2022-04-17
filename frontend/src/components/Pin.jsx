@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { DownloadIcon, LinkIcon } from "@heroicons/react/outline";
+import { DownloadIcon, LinkIcon, TrashIcon } from "@heroicons/react/outline";
 
 const Pin = ({
   pin: { image, _id, destination, postedBy, save },
@@ -26,9 +26,15 @@ const Pin = ({
     save?.filter((item) => item?.postedBy?._id === userId)
   );
 
-  const saveOrDeletePost = (id) => {
+  const deletePost = (id) => {
+    setReload(false);
+    client.delete(id).then(() => setReload(true));
+  };
+
+  const savePost = (id) => {
     if (!alreadySaved) {
       setLoading(true);
+      setReload(false);
       client
         .patch(id)
         .setIfMissing({ save: [] })
@@ -51,7 +57,10 @@ const Pin = ({
   };
 
   return (
-    <Link to={`/pin-detail/${_id}`} className="space-y-2 space-x-2">
+    <Link
+      to={`/pin-detail/${_id}`}
+      className="space-y-2 space-x-2 cursor-zoom-in"
+    >
       <div
         className="relative mx-2"
         onMouseEnter={() => setPostHover(true)}
@@ -70,25 +79,23 @@ const Pin = ({
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  saveOrDeletePost(_id);
+                  savePost(_id);
                 }}
               >
-                {/* {alreadySaved ? "Saved" : "Save"} */}
                 {!alreadySaved && loading
                   ? "Saving"
                   : alreadySaved && !loading
-                  ? "Saved ✓"
+                  ? `${save?.length} Saved ✓`
                   : "Save"}
               </button>
             </div>
 
             <div className="absolute top-2 left-2">
-              <div className=" cursor-pointer flex justify-center items-center bg-gray-200 p-2 rounded-full">
+              <div className=" cursor-pointer flex justify-center items-center bg-gray-200 p-2 rounded-full hover:shadow-md">
                 <a
                   href={`${image?.asset?.url}?dl=`}
                   download
                   onClick={(e) => {
-                    e.preventDefault();
                     e.stopPropagation();
                   }}
                 >
@@ -97,11 +104,25 @@ const Pin = ({
               </div>
             </div>
 
+            {postedBy?._id === userId && (
+              <div className="absolute bottom-2 right-2">
+                <button
+                  className="cursor-pointer flex justify-center items-center p-2 bg-gray-200 rounded-full hover:shadow-md"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deletePost(_id);
+                  }}
+                >
+                  <TrashIcon className="w-5 h-5 object-cover" />
+                </button>
+              </div>
+            )}
+
             {destination && (
               <div className="absolute bottom-2 left-2">
                 <a
                   onClick={(e) => {
-                    e.preventDefault();
                     e.stopPropagation();
                   }}
                   href={destination}
@@ -110,7 +131,11 @@ const Pin = ({
                   className="cursor-pointer gap-1 flex justify-center items-center bg-gray-200 p-2 pr-3 rounded-full"
                 >
                   <LinkIcon className="h-4 w-4" />
-                  <p>{destination?.slice(8, 20) + "..."}</p>
+                  <p>
+                    {destination?.length > 20
+                      ? destination?.slice(8, 20) + "..."
+                      : destination}
+                  </p>
                 </a>
               </div>
             )}
