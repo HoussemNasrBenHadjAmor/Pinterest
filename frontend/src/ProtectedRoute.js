@@ -23,6 +23,8 @@ const ProtectedRoute = ({ children }) => {
 
   const id = cookies.get("user_id");
 
+  console.log("id", id);
+
   const fetchData = () => {
     const query = usersIdQuery(id);
     client
