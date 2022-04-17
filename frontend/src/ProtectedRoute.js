@@ -28,7 +28,6 @@ const ProtectedRoute = ({ children }) => {
     client
       .fetch(query)
       .then((res) => {
-        console.log("res", res);
         if (res?.length) {
           setLogged(true);
         } else {
@@ -36,7 +35,8 @@ const ProtectedRoute = ({ children }) => {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log("err", err);
         setError(true);
       });
   };
