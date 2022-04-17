@@ -1,14 +1,11 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FiSearch } from "react-icons/fi";
 
-import { RiAddFill } from "react-icons/ri";
-
-import { AiOutlineSend } from "react-icons/ai";
-
 import { IoSend } from "react-icons/io5";
 
-import { Link, useNavigate } from "react-router-dom";
+import { PlusIcon } from "@heroicons/react/solid";
 
 const Navbar = ({ user, setSearchTerm, searchTerm, setClicked }) => {
   const navigate = useNavigate();
@@ -44,12 +41,12 @@ const Navbar = ({ user, setSearchTerm, searchTerm, setClicked }) => {
 
         <IoSend
           fontSize={20}
-          className="cursor-pointer"
+          className="cursor-pointer mr-2"
           onClick={() => setClicked(true)}
         />
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 justify-center items-center">
         <Link to={`user-profile/${user?._id}`} className="hidden md:flex">
           <img
             src={user?.image}
@@ -60,9 +57,9 @@ const Navbar = ({ user, setSearchTerm, searchTerm, setClicked }) => {
 
         <Link
           to="create-pin"
-          className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-md"
+          className="w-12 h-12 flex items-center justify-center bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition-all duration-300 ease-in-out"
         >
-          <RiAddFill fontSize={20} />
+          <PlusIcon className="h-5 w-5" />
         </Link>
       </div>
     </div>

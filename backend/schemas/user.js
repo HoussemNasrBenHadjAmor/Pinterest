@@ -13,5 +13,11 @@ export default {
       title: "Image",
       type: "string",
     },
+
+    {
+      name: "profileID",
+      title: "ProfileID",
+      type: "string",
+    },
   ],
 };

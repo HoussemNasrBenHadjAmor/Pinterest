@@ -48,7 +48,7 @@ const ProtectedRoute = ({ children }) => {
       cookies.remove("user_id", { path: "/" });
       navigate("/login", { replace: true });
     }
-  }, []);
+  }, [id]);
 
   if (loading) {
     return <Loader height="h-screen" notShow />;

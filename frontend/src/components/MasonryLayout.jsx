@@ -2,7 +2,7 @@ import Masonry from "react-masonry-css";
 
 import { Pin } from "./";
 
-const MasonryLayout = ({ pins }) => {
+const MasonryLayout = ({ pins, setReload }) => {
   const breakpointColumnsObj = {
     default: 4,
     3000: 6,
@@ -15,7 +15,7 @@ const MasonryLayout = ({ pins }) => {
   return (
     <Masonry className="flex" breakpointCols={breakpointColumnsObj}>
       {pins?.map((pin) => (
-        <Pin pin={pin} key={`pin-${pin._id}`} />
+        <Pin pin={pin} key={`pin-${pin._id}`} setReload={setReload} />
       ))}
     </Masonry>
   );

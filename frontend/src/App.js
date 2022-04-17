@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Login, NotFoundPage, UserProfile } from "./components";
+import { Login } from "./components";
 
-import { Home, Pins } from "./pages";
+import { Home } from "./pages";
 
 import ProtectedRoute from "./ProtectedRoute";
 import LoggedRoute from "./LoggedRoute";

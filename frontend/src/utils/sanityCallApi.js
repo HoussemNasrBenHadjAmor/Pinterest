@@ -1,7 +1,7 @@
 export const usersIdQuery = (id) => {
   const query = `
-    *[_type == "user" && _id == "${id}"] {
-        _id
+    *[_type == "user" && profileID == "${id}"] {
+        profileID
     }
     `;
   return query;
@@ -9,7 +9,7 @@ export const usersIdQuery = (id) => {
 
 export const userQuery = (id) => {
   const query = `
-  *[_type == 'user' && _id =='${id}'] [0]
+  *[_type == 'user' && profileID =='${id}'] [0]
   `;
   return query;
 };
@@ -30,8 +30,9 @@ export const categoryQuery = () => {
 export const feedQuery = () => {
   const query = `
   *[_type =="pin" ] |order(_createdAt desc){
+    _id,
     image {
-      assets->{
+      asset->{
         url
       }
     },
@@ -42,7 +43,6 @@ export const feedQuery = () => {
     },
     destination,
     save[]{
-      _key,
       postedBy ->{
         _id,
         userName,
@@ -56,9 +56,10 @@ export const feedQuery = () => {
 
 export const searchQuery = (searchTerm) => {
   const query = `
-  *[_type=='pin' && title match '${searchTerm}' || category match '${searchTerm}' || about match '${searchTerm}']{
-      image {
-        assets->{
+  *[_type=='pin' && title match '${searchTerm}*' || category->title match '${searchTerm}*' || about match '${searchTerm}*']{
+     _id, 
+    image {
+        asset->{
           url
         }
       },
@@ -69,7 +70,6 @@ export const searchQuery = (searchTerm) => {
       },
       destination,
       save[]{
-        _key,
         postedBy ->{
           _id,
           userName,

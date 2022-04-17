@@ -1,10 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { urlFor } from "../utils/sanity";
 
+import Cookies from "universal-cookie";
+
 import { pLogo } from "../assets";
 
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { LogoutIcon } from "@heroicons/react/solid";
 
 const isNotActiveStyle =
   "flex items-center gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize";
@@ -12,10 +14,19 @@ const isActiveStyle =
   "flex items-center gap-3 font-bold border-r-2 border-black transition-all duration-200 ease-in-out capitalize";
 
 const Sidebar = ({ user, toggleSideBar, setToggleSideBar, categories }) => {
+  const cookies = new Cookies();
+
+  const navigate = useNavigate();
+
   const handleCloseSideBar = () => {
     if (toggleSideBar) {
       setToggleSideBar(false);
     }
+  };
+
+  const logout = () => {
+    cookies.remove("user_id", { path: "/" });
+    navigate("/login", { replace: "true" });
   };
 
   return (
@@ -63,14 +74,25 @@ const Sidebar = ({ user, toggleSideBar, setToggleSideBar, categories }) => {
 
         {user && (
           <Link
-            to={`user-profile/${user._id}`}
-            className="flex items-center gap-2 my-5 mb-5 p-2 -mx-2 shadow-lg rounded-lg bg-white"
+            to={`user-profile/${user?._id}`}
+            className="flex items-center gap-2 my-5 p-2 -mx-2 shadow-lg rounded-lg bg-white"
             onClick={handleCloseSideBar}
           >
             <img src={user.image} className="w-9 h-9 rounded-full" alt="user" />
             <p>{user.userName}</p>
-            <AiOutlineArrowRight />
           </Link>
+        )}
+
+        {user && (
+          <div
+            onClick={logout}
+            className="flex items-center justify-center mt-2 mb-5 cursor-pointer bg-white p-2 rounded-lg hover:bg-black text-black hover:text-white transition-all duration-300 ease-in-out"
+          >
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-sm">Log Out </p>
+              <LogoutIcon className="w-5 h-5 " />
+            </div>
+          </div>
         )}
       </div>
     </div>

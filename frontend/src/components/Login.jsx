@@ -1,12 +1,14 @@
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
+import { v4 as uuidv4 } from "uuid";
+
 import { client } from "../utils/sanity";
 
 import { GoogleLogin } from "react-google-login";
 
 import Cookies from "universal-cookie";
-
-import { useNavigate } from "react-router-dom";
 
 import { ServerDown } from "../components";
 
@@ -21,18 +23,23 @@ const Login = () => {
 
   const [error, setError] = useState(false);
 
+  const profileID = uuidv4();
+
   const googleSuccess = (res) => {
     const { name, imageUrl, googleId } = res.profileObj;
-    cookie.set("user_id", googleId, {
+    cookie.set("user_id", profileID, {
       path: "/",
     });
+
+    cookie.set("id", googleId, { path: "/" });
     const user = {
       _type: "user",
       _id: googleId,
       userName: name,
       image: imageUrl,
+      profileID,
     };
-    client.createIfNotExists(user).then(() => {
+    client.createOrReplace(user).then(() => {
       navigate("/", { replace: true });
     });
   };

@@ -84,7 +84,7 @@ const Home = () => {
       </div>
 
       {toggleSideBar && (
-        <div className="w-4/5 fixed bg-white h-screen overflow-y-auto shadow-2xl z-10">
+        <div className="w-4/5 fixed bg-white h-screen overflow-y-scroll scrollbar-hide shadow-2xl z-10">
           <div className="relative w-full flex justify-end items-center p-2">
             <IoCloseOutline
               fontSize={30}

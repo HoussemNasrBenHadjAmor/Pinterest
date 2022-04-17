@@ -15,6 +15,8 @@ const Feed = () => {
 
   const { categoryId } = useParams();
 
+  const [reload, setReload] = useState(false);
+
   const ideaMessage = categoryId ? categoryId : "new";
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const Feed = () => {
         })
         .catch(() => setError(true));
     }
-  }, [categoryId]);
+  }, [categoryId, reload]);
 
   if (error) {
     return <ServerDown />;
@@ -48,7 +50,7 @@ const Feed = () => {
     return <Loader message={`Searching for ${ideaMessage} products!`} />;
   }
 
-  if (!pins?.length) {
+  if (pins?.length === 0) {
     return (
       <div className="h-screen flex items-center justify-center">
         <p>Sorry no product was found! </p>
@@ -56,7 +58,7 @@ const Feed = () => {
     );
   }
 
-  return <MasonryLayout pins={pins && pins} />;
+  return <MasonryLayout pins={pins && pins} setReload={setReload} />;
 };
 
 export default Feed;
