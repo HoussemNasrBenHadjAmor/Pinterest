@@ -23,9 +23,9 @@ const ProtectedRoute = ({ children }) => {
 
   const id = cookies.get("user_id");
 
-  const fetchData = async () => {
+  const fetchData = () => {
     const query = usersIdQuery(id);
-    await client
+    client
       .fetch(query)
       .then((res) => {
         if (res?.length) {
