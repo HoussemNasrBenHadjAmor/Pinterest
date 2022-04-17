@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import Cookies from "universal-cookie";
 
-const cookies = new Cookies();
-
 const LoggedRoute = ({ children }) => {
+  const cookies = new Cookies();
+
   const navigate = useNavigate();
 
   const id = cookies.get("user_id");

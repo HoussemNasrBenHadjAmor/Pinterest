@@ -10,9 +10,9 @@ import { client } from "./utils/sanity";
 
 import { Loader, ServerDown } from "./components";
 
-const cookies = new Cookies();
-
 const ProtectedRoute = ({ children }) => {
+  const cookies = new Cookies();
+
   const [loading, setLoading] = useState(null);
 
   const [logged, setLogged] = useState(null);
