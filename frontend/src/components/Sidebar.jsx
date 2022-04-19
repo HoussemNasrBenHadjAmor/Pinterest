@@ -51,7 +51,7 @@ const Sidebar = ({ user, toggleSideBar, setToggleSideBar, categories }) => {
             Home
           </NavLink>
 
-          <h3 className="mt-2 text-base 2xl:text-xl">Discover cateogries</h3>
+          <h3 className="mt-2 text-base 2xl:text-xl">Discover categories</h3>
 
           {categories?.map(({ slug, image, title }) => (
             <NavLink

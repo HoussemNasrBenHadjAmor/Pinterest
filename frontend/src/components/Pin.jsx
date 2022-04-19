@@ -22,19 +22,17 @@ const Pin = ({
 
   const userId = cookies.get("id");
 
-  const alreadySaved = Boolean(
-    save?.filter((item) => item?.postedBy?._id === userId)
-  );
+  const alreadySaved = !!save?.filter((item) => item?.userId === userId).length;
 
   const deletePost = (id) => {
     setReload(false);
     client.delete(id).then(() => setReload(true));
   };
 
-  const savePost = (id) => {
+  const saveOrUnsavePost = (id) => {
+    setReload(false);
     if (!alreadySaved) {
       setLoading(true);
-      setReload(false);
       client
         .patch(id)
         .setIfMissing({ save: [] })
@@ -53,40 +51,44 @@ const Pin = ({
           setLoading(false);
           setReload(true);
         });
+    } else {
+      const index = save?.map((item) => item.userId).indexOf(userId);
+      client
+        .patch(id)
+        .splice("save", index, 1)
+        .commit()
+        .then(() => setReload(true));
     }
   };
 
   return (
-    <Link
-      to={`/pin-detail/${_id}`}
-      className="space-y-2 space-x-2 cursor-zoom-in"
-    >
+    <Link to={`/pin-detail/${_id}`} className="space-y-2 cursor-zoom-in">
       <div
-        className="relative mx-2"
+        className="relative"
         onMouseEnter={() => setPostHover(true)}
         onMouseLeave={() => setPostHover(false)}
       >
         <img
-          src={urlFor(image).width(250).url()}
+          src={urlFor(image).url()}
           alt="pin"
-          className="rounded-lg w-full h-full"
+          className="rounded-lg w-full h-full object-cover"
         />
         {postHover && (
           <div className="z-50">
             <div className="absolute top-2 right-2">
               <button
-                className="flex justify-center items-center p-2 text-white px-5 bg-red-500 opacity-70 rounded-3xl outline-none hover:opacity-100 hover:shadow-md"
+                className="flex text-sm justify-center items-center p-2 text-white px-3 bg-red-500 opacity-70 rounded-3xl outline-none hover:opacity-100 hover:shadow-md"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  savePost(_id);
+                  saveOrUnsavePost(_id);
                 }}
               >
                 {!alreadySaved && loading
                   ? "Saving"
                   : alreadySaved && !loading
                   ? `${save?.length} Saved ✓`
-                  : "Save"}
+                  : `${save?.length ? save?.length : 0} Save(s)`}
               </button>
             </div>
 
@@ -130,8 +132,8 @@ const Pin = ({
                   rel="noreferrer"
                   className="cursor-pointer gap-1 flex justify-center items-center bg-gray-200 p-2 pr-3 rounded-full"
                 >
-                  <LinkIcon className="h-4 w-4" />
-                  <p>
+                  <LinkIcon className="h-3 w-3" />
+                  <p className="text-xs">
                     {destination?.length > 20
                       ? destination?.slice(8, 20) + "..."
                       : destination}
@@ -144,7 +146,7 @@ const Pin = ({
       </div>
       <Link
         to={`/user-profile/${postedBy?._id}`}
-        className="flex items-center gap-1 mx-2 pb-5"
+        className="flex items-center gap-1 pb-5"
       >
         <img
           src={postedBy?.image}

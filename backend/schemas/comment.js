@@ -4,6 +4,11 @@ export default {
   type: "document",
   fields: [
     {
+      name: "createdAt",
+      title: "CreatedAt",
+      type: "datetime",
+    },
+    {
       name: "postedBy",
       title: "PostedBy",
       type: "postedBy",

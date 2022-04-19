@@ -22,7 +22,7 @@ const Feed = () => {
   useEffect(() => {
     setLoading(true);
     if (categoryId) {
-      const query = searchQuery();
+      const query = searchQuery(categoryId);
       client
         .fetch(query)
         .then((res) => {

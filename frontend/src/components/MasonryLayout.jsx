@@ -13,7 +13,7 @@ const MasonryLayout = ({ pins, setReload }) => {
   };
 
   return (
-    <Masonry className="flex" breakpointCols={breakpointColumnsObj}>
+    <Masonry className="flex gap-3" breakpointCols={breakpointColumnsObj}>
       {pins?.map((pin) => (
         <Pin pin={pin} key={`pin-${pin._id}`} setReload={setReload} />
       ))}
