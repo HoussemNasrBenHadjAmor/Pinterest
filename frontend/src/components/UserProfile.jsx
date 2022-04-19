@@ -95,10 +95,14 @@ const UserProfile = () => {
         {!saved && <MasonryLayout pins={createdPost} setReload={setReload} />}
         {saved && <MasonryLayout pins={savedPost} setReload={setReload} />}
         {!saved && !createdPost?.length && (
-          <p className="text-center mt-16">Sorry no post was found!</p>
+          <p className="text-center mt-16">
+            Sorry no post is saved! Save a post and u'll find it here!
+          </p>
         )}
         {saved && !savedPost?.length && (
-          <p className="text-center mt-16">Sorry no post was found!</p>
+          <p className="text-center mt-16">
+            Sorry no post is created! It's time to start creating posts!
+          </p>
         )}
       </div>
     </>
