@@ -74,7 +74,11 @@ const Pin = ({
           className="rounded-lg w-full h-full object-cover"
         />
 
-        <div className="z-50 flex-initial lg:hidden">
+        <div
+          className={`z-50 flex-initial md:${
+            postHover ? "flex flex-col " : "hidden"
+          }`}
+        >
           <div className="absolute top-2 right-2">
             <button
               className="flex text-sm justify-center items-center p-2 text-white px-3 bg-red-500 opacity-70 rounded-3xl outline-none hover:opacity-100 hover:shadow-md"
