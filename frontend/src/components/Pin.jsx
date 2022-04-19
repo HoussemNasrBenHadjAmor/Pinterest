@@ -73,76 +73,75 @@ const Pin = ({
           alt="pin"
           className="rounded-lg w-full h-full object-cover"
         />
-        {postHover && (
-          <div className="z-50">
-            <div className="absolute top-2 right-2">
+
+        <div className="z-50 flex-initial lg:hidden">
+          <div className="absolute top-2 right-2">
+            <button
+              className="flex text-sm justify-center items-center p-2 text-white px-3 bg-red-500 opacity-70 rounded-3xl outline-none hover:opacity-100 hover:shadow-md"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                saveOrUnsavePost(_id);
+              }}
+            >
+              {!alreadySaved && loading
+                ? "Saving"
+                : alreadySaved && !loading
+                ? `${save?.length} Saved ✓`
+                : `${save?.length ? save?.length : 0} Save(s)`}
+            </button>
+          </div>
+
+          <div className="absolute top-2 left-2">
+            <div className=" cursor-pointer flex justify-center items-center bg-gray-200 p-2 rounded-full hover:shadow-md">
+              <a
+                href={`${image?.asset?.url}?dl=`}
+                download
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <DownloadIcon className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+
+          {postedBy?._id === userId && (
+            <div className="absolute bottom-2 right-2">
               <button
-                className="flex text-sm justify-center items-center p-2 text-white px-3 bg-red-500 opacity-70 rounded-3xl outline-none hover:opacity-100 hover:shadow-md"
+                className="cursor-pointer flex justify-center items-center p-2 bg-gray-200 rounded-full hover:shadow-md"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  saveOrUnsavePost(_id);
+                  deletePost(_id);
                 }}
               >
-                {!alreadySaved && loading
-                  ? "Saving"
-                  : alreadySaved && !loading
-                  ? `${save?.length} Saved ✓`
-                  : `${save?.length ? save?.length : 0} Save(s)`}
+                <TrashIcon className="w-5 h-5 object-cover" />
               </button>
             </div>
+          )}
 
-            <div className="absolute top-2 left-2">
-              <div className=" cursor-pointer flex justify-center items-center bg-gray-200 p-2 rounded-full hover:shadow-md">
-                <a
-                  href={`${image?.asset?.url}?dl=`}
-                  download
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <DownloadIcon className="h-5 w-5" />
-                </a>
-              </div>
+          {destination && (
+            <div className="absolute bottom-2 left-2">
+              <a
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                href={destination}
+                target="_blank"
+                rel="noreferrer"
+                className="cursor-pointer gap-1 flex justify-center items-center bg-gray-200 p-2 pr-3 rounded-full"
+              >
+                <LinkIcon className="h-3 w-3" />
+                <p className="text-xs">
+                  {destination?.length > 20
+                    ? destination?.slice(8, 20) + "..."
+                    : destination}
+                </p>
+              </a>
             </div>
-
-            {postedBy?._id === userId && (
-              <div className="absolute bottom-2 right-2">
-                <button
-                  className="cursor-pointer flex justify-center items-center p-2 bg-gray-200 rounded-full hover:shadow-md"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    deletePost(_id);
-                  }}
-                >
-                  <TrashIcon className="w-5 h-5 object-cover" />
-                </button>
-              </div>
-            )}
-
-            {destination && (
-              <div className="absolute bottom-2 left-2">
-                <a
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  href={destination}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="cursor-pointer gap-1 flex justify-center items-center bg-gray-200 p-2 pr-3 rounded-full"
-                >
-                  <LinkIcon className="h-3 w-3" />
-                  <p className="text-xs">
-                    {destination?.length > 20
-                      ? destination?.slice(8, 20) + "..."
-                      : destination}
-                  </p>
-                </a>
-              </div>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
       <Link
         to={`/user-profile/${postedBy?._id}`}
