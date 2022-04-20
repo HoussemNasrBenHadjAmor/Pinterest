@@ -23,6 +23,7 @@ export const userProfile = (id) => {
 
 export const categoryQuery = () => {
   const query = `*[_type == "category" ] {
+    _id,
     slug,
     title,
     image {
@@ -64,7 +65,7 @@ export const feedQuery = () => {
 
 export const searchQuery = (searchTerm) => {
   const query = `
-  *[_type=='pin' && (title match '${searchTerm}*' || category->title match '${searchTerm}*' || about match '${searchTerm}*')]{
+  *[_type=='pin' && (title match '${searchTerm}*' || category->title match '${searchTerm}*' || about match '${searchTerm}*')] |order(_createdAt desc){
      _id, 
     image {
         asset->{

@@ -10,7 +10,7 @@ import {
   NotFoundPage,
 } from "../components";
 
-const Pins = ({ user }) => {
+const Pins = ({ user, categories }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [clicked, setClicked] = useState(false);
@@ -37,7 +37,7 @@ const Pins = ({ user }) => {
           />
           <Route
             path="/create-pin"
-            element={<CreatePin user={user && user} />}
+            element={<CreatePin user={user && user} categories={categories} />}
           />
           <Route
             path="/search"
