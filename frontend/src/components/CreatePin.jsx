@@ -194,7 +194,7 @@ const CreatePin = ({ categories, user }) => {
           ))} */}
           <input
             type="text"
-            placeholder="title"
+            placeholder="Add your post title*"
             className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg lg:text-2xl lg:font-semibold
             `}
             name="title"
@@ -214,7 +214,7 @@ const CreatePin = ({ categories, user }) => {
           </Link>
           <input
             type="text"
-            placeholder="description"
+            placeholder="A little description about your post*"
             className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg `}
             name="description"
             onChange={(e) => changeData(e)}
@@ -222,7 +222,7 @@ const CreatePin = ({ categories, user }) => {
           />{" "}
           <input
             type="text"
-            placeholder="destination"
+            placeholder="A little description about your post* Link for your image post"
             className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg `}
             name="destination"
             onChange={(e) => changeData(e)}
