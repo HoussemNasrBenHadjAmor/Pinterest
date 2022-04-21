@@ -222,7 +222,7 @@ const CreatePin = ({ categories, user }) => {
           />{" "}
           <input
             type="text"
-            placeholder="A little description about your post* Link for your image post"
+            placeholder="A Link for your image post*"
             className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg `}
             name="destination"
             onChange={(e) => changeData(e)}
