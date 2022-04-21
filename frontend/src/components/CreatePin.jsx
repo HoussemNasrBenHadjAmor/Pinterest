@@ -189,9 +189,45 @@ const CreatePin = ({ categories, user }) => {
         </div>
 
         <div className="flex flex-col flex-1 gap-5 lg:px-5">
-          {fileds.map(({ placeHolder, name }) => (
+          {/* {fileds.map(({ placeHolder, name }) => (
             <Input placeHolder={placeHolder} name={name} key={name} />
-          ))}
+          ))} */}
+          <input
+            type="text"
+            placeholder="title"
+            className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg lg:text-2xl lg:font-semibold
+            `}
+            name="title"
+            onChange={(e) => changeData(e)}
+            value={data.title}
+          />
+          <Link
+            to={`/user-profile/${user?._id}`}
+            className="flex items-center gap-2 my-3"
+          >
+            <img
+              src={user?.image}
+              alt="user"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <p className="text-sm sm:text-base font-bold"> {user?.userName} </p>
+          </Link>
+          <input
+            type="text"
+            placeholder="description"
+            className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg `}
+            name="description"
+            onChange={(e) => changeData(e)}
+            value={data.description}
+          />{" "}
+          <input
+            type="text"
+            placeholder="destination"
+            className={`w-full p-2 outline-none border-b-2 border-slate-200 rounded-lg `}
+            name="destination"
+            onChange={(e) => changeData(e)}
+            value={data.destination}
+          />
           {
             <select
               onChange={(e) => {

@@ -182,8 +182,8 @@ const PinDetail = ({ user }) => {
                 rel="noreferrer"
                 className="underline underline-offset-4"
               >
-                {pin?.destination?.length > 10
-                  ? pin?.destination?.slice(12, 25)
+                {pin?.destination?.length > 20
+                  ? pin?.destination?.slice(8, 20)
                   : pin?.destination}
               </a>
             </div>
