@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const ProtectedRoute = ({ children }) => {
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError(true);
       });
   };
